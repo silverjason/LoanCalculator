@@ -21,7 +21,7 @@ class ExampleTest extends TestCase
         $expense_new_per_crown = 30;
 
         $no_interest_in_first_year = true;
-        $interest_only_for_first_year = true;
+        $interest_only_for_first_year = false;
 
         $expense_current_per_week = 300;
         $crowns_per_week = 8;
@@ -46,11 +46,10 @@ class ExampleTest extends TestCase
             'interest_only_for_first_year' => $interest_only_for_first_year
         );
 
+
         $amortization = new Amortization($data);
 
-
         $year = 1;
-
         $year_results = [];
 
         while ($year <= $loan_term) {

@@ -108,14 +108,14 @@ class Amortization {
     private function calculate()
     {
 
-        if (!$this->interest_free_months && $this->month > $this->interest_free_months) {
-            $deno = 1 - 1 / pow((1+ $this->interest),$this->period);
+        if (!$this->interest_free_months || $this->month > $this->interest_free_months) {
+            $deno = 1 - 1 / pow((1 + $this->interest),$this->period);
             $this->term_pay = ($this->loan_amount * $this->interest) / $deno;
         }
 
         $interest = $this->loan_amount * $this->interest;
 
-        if (!$this->interest_free_months && $this->month > $this->interest_free_months) {
+        if (!$this->interest_free_months || $this->month > $this->interest_free_months) {
             $this->principal = $this->term_pay - $interest;
         }
         $this->balance = $this->loan_amount - $this->principal ?? 0;
