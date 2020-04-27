@@ -26,27 +26,24 @@ function getPrincipalBalanceForYear(year) {
     return principal_balance > 0 ? principal_balance : 0;
 }
 
-function drawGraph() {
+function calculateLoan() {
 
-    debugger
+    debugger;
+
+
     //Calculations
-    let income_per_crown = 1600;
-
-    let no_interest_in_first_year = true;
-    let interest_only_for_first_year = false;
-
-    let crowns_per_week = 8;
-
-    let loan_amount = 100000;
-    let loan_term = 5;
-    let interest = 0.045;
-    let payments_per_year = 12;
-
-    let months_volume_impacted = 6;
-
-    let is_company = false;
+    let income_per_crown = document.getElementById("income_per_crown").value;
+    let crowns_per_week = document.getElementById("crowns_per_week").value;
+    let loan_amount = document.getElementById("loan_amount").value;
+    let loan_term = document.getElementById("term").value;
+    let interest = document.getElementById("term").value / 100;
+    let payments_per_year = document.getElementById("payments_per_year").value;
+    let months_volume_impacted = document.getElementById("months_impacted").value;
+    let interest_only_for_first_year = document.getElementById("interest_only_for_first_year").checked;
+    let no_interest_in_first_year = document.getElementById("no_interest_in_first_year").checked;
+    let claim_instant_threshold = document.getElementById("claim_instant_threshold").checked;
+    let is_company = document.getElementById("is_company").checked;
     let tax_rate = is_company ? 0.27 : 0.45;
-    let claim_instant_threshold = false;
 
     let data = {
         'loan_amount' : loan_amount,
@@ -90,6 +87,51 @@ function drawGraph() {
         tax_rate,
         claim_instant_threshold
     );
+
+    drawGraph(current_method_results, mside_method_results, loan_term)
+
+}
+
+function drawGraph(current_method_results, mside_method_results, loan_term) {
+
+    let labels = [];
+    for (let index = 1; index <= loan_term; ++index) {
+        labels.push(index);
+    }
+
+    let series = [];
+    series.push();
+    series.push(mside_method_results.flatMap(x => [x.cashflow]));
+
+
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var chart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: 'line',
+
+        // The data for our dataset
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Current Method',
+                backgroundColor: 'rgb(255, 255, 255)',
+                borderColor: 'rgb(0,157,156)',
+                borderWidth: 5,
+                data: current_method_results.flatMap(x => [(x.cashflow)])
+            },{
+                label: 'MSide Method',
+                backgroundColor: 'rgb(255, 255, 255)',
+                borderColor: 'rgb(0,27,221)',
+                borderWidth: 5,
+                data: mside_method_results.flatMap(x => [x.cashflow])
+            }
+            ]
+        },
+
+        // Configuration options go here
+        options: {responsive:false}
+    });
+
 
 }
 

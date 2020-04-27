@@ -12,8 +12,7 @@
     <script src="/calculator.js"></script>
 
     {{--    Chart.js--}}
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
-    <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 
     <!-- Styles -->
     <style>
@@ -30,6 +29,7 @@
             text-align: center;
         }
 
+
     </style>
 
 
@@ -41,28 +41,63 @@
 
     <div class="content">
 
-        <h1>Title</h1>
+        <h1>Loan Calculator</h1>
 
-        <div class="ct-chart ct-perfect-fourth"></div>
+        <div>
+            <span>Income Per Crown</span>
+            <input id="income_per_crown"  value="1600" maxlength="8" class="form-control" placeholder="0" min="0" max="99999999" type="number">
+        </div>
+        <div>
+            <span>Crowns Per Week</span>
+            <input id="crowns_per_week"  value="8" maxlength="8" class="form-control" placeholder="0" min="0" max="99999999" type="number">
+        </div>
+        <div>
+            <span>Loan Amount</span>
+            <input id="loan_amount"  value="100000" maxlength="8" class="form-control" placeholder="0" min="0" max="99999999" type="number">
+        </div>
+        <div>
+            <span>Term (years)</span>
+            <input id="term"  value="5" maxlength="7" class="form-control" placeholder="0" min="0" max="7" type="number">
+        </div>
+        <div>
+            <span>Interest %</span>
+            <input id="interest_rate"  value="4.5" maxlength="8" class="form-control" placeholder="0" min="0" max="99999999" type="number">
+        </div>
+        <div>
+            <span>Payments Per Year</span>
+            <input id="payments_per_year"  value="12" maxlength="8" class="form-control" placeholder="0" min="0" max="99999999" type="number">
+        </div>
+        <div>
+            <span>Months Impacted by Covid</span>
+            <input id="months_impacted"  value="0" maxlength="8" class="form-control" placeholder="0" min="0" max="99999999" type="number">
+        </div>
+        <div>
+            <span>Interest Only for 1st Year</span>
+            <input id="interest_only_for_first_year"  class="form-control" placeholder="0" type="checkbox">
+        </div>
+        <div>
+            <span>Interest Free for 1st Year</span>
+            <input id="no_interest_in_first_year" class="form-control" placeholder="0" type="checkbox">
+        </div>
+        <div>
+            <span>Claim threshold</span>
+            <input id="claim_instant_threshold" class="form-control" placeholder="0" type="checkbox">
+        </div>
+        <div>
+            <span>Tax as Company</span>
+            <input id="is_company" class="form-control" placeholder="0" type="checkbox">
+        </div>
+
+        <button type="button" onclick="calculateLoan()">Calculate</button>
+
+        <div id="graph-container">
+            <canvas id="myChart" width="700" height="500" style="margin: auto;"></canvas>
+
+        </div>
 
 
     </div>
 </div>
 </body>
 
-<script>
-    var data = {
-        // A labels array that can contain any sort of values
-        labels: [0, 1, 2, 3, 4, 5],
-        // Our series array that contains series objects or in this case series data arrays
-        series: [
-            [5, 2, 4, 2, 0, 3]
-        ]
-    };
-
-    // Create a new line chart object where as first parameter we pass in a selector
-    // that is resolving to our chart container element. The Second parameter
-    // is the actual data object.
-    new Chartist.Line('.ct-chart', data);
-</script>
 </html>
