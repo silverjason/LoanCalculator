@@ -5,6 +5,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/calculator.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/calculator.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/calculator.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/calculator.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Unit/ExampleTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Unit/ExampleTest.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -170,11 +171,11 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="PHP Built-in Web Server.localServer" />
-      <item itemvalue="PHPUnit.phpunit.xml" />
       <item itemvalue="PHPUnit.ExampleTest.testBasicTest" />
       <item itemvalue="PHPUnit.ExampleTest.testCurrentMethod" />
       <item itemvalue="PHPUnit.ExampleTest.testMDentMethod" />
+      <item itemvalue="PHPUnit.phpunit.xml" />
+      <item itemvalue="PHP Built-in Web Server.localServer" />
     </list>
     <recent_temporary>
       <list>

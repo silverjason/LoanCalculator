@@ -31,7 +31,7 @@ class ExampleTest extends TestCase
         $interest = 0.045;
         $payments_per_year = 12;
 
-        $months_volume_impacted = 6;
+        $months_volume_impacted = 0;
 
         $is_company = false;
         $tax_rate = $is_company ? 0.27 : 0.45;

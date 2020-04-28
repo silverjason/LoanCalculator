@@ -41,7 +41,7 @@ function calculateLoan() {
     let payments_per_year = document.getElementById("payments_per_year").value;
     let months_volume_impacted = document.getElementById("months_impacted").value;
     let interest_only_for_first_year = document.getElementById("interest_only_for_first_year").checked;
-    let no_interest_in_first_year = document.getElementById("no_interest_in_first_year").checked;
+    let no_interest_in_first_year = !document.getElementById("no_interest_in_first_year").checked;
     let claim_instant_threshold = document.getElementById("claim_instant_threshold").checked;
     let is_company = document.getElementById("is_company").checked;
     let tax_rate = is_company ? 0.27 : 0.45;
@@ -142,7 +142,7 @@ function drawCashflowGraph(current_method_results, mside_method_results, loan_te
                 {responsive:false,
                     title: {
                         display: true,
-                        text: "Cashflow"
+                        text: "Cashflow ($)"
                     },
                     scales: {
                         yAxes: [{
@@ -173,15 +173,15 @@ function drawProfitGraph(current_method_results, mside_method_results, loan_term
 
     let datasets = [{
         label: 'Current Method',
-        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        backgroundColor: 'rgba(255, 255, 255, 0)',
         borderColor: 'rgba(54, 162, 235, 1)',
-        borderWidth: 1,
+        borderWidth: 4,
         data: current_method_results.flatMap(x => [(x.profit)])
     },{
         label: 'MSide Method',
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        backgroundColor: 'rgba(255, 255, 255, 0)',
         borderColor: 'rgba(75, 192, 192, 1)',
-        borderWidth: 1,
+        borderWidth: 4,
         data: mside_method_results.flatMap(x => [x.profit])
     }];
 
@@ -193,7 +193,7 @@ function drawProfitGraph(current_method_results, mside_method_results, loan_term
     } else {
         profit_chart = new Chart(ctx, {
             // The type of chart we want to create
-            type: 'bar',
+            type: 'line',
 
             // The data for our dataset
             data: {
@@ -206,7 +206,7 @@ function drawProfitGraph(current_method_results, mside_method_results, loan_term
                 {responsive:false,
                     title: {
                         display: true,
-                        text: "Cashflow"
+                        text: "Cumulative Profit After Tax ($)"
                     },
                     scales: {
                         yAxes: [{
@@ -218,8 +218,6 @@ function drawProfitGraph(current_method_results, mside_method_results, loan_term
                 }
         });
     }
-
-
 
 
 }

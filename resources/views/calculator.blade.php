@@ -29,6 +29,9 @@
             text-align: center;
         }
 
+        .loan-chart {
+            display: inline !important;;
+        }
 
     </style>
 
@@ -91,8 +94,8 @@
         <button type="button" onclick="calculateLoan()">Calculate</button>
 
         <div id="graph-container">
-            <canvas id="cashflow-chart" width="400" height="400" style="margin: auto;"></canvas>
-            <canvas id="profit-chart" width="400" height="400" style="margin: auto;"></canvas>
+            <canvas id="cashflow-chart" class="loan-chart" width="400" height="400" style="margin: auto;"></canvas>
+            <canvas id="profit-chart" class="loan-chart" width="400" height="400" style="margin: auto;"></canvas>
         </div>
 
 
