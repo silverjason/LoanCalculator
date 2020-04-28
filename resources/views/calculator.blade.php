@@ -91,12 +91,13 @@
         <button type="button" onclick="calculateLoan()">Calculate</button>
 
         <div id="graph-container">
-            <canvas id="myChart" width="700" height="500" style="margin: auto;"></canvas>
-
+            <canvas id="cashflow-chart" width="400" height="400" style="margin: auto;"></canvas>
+            <canvas id="profit-chart" width="400" height="400" style="margin: auto;"></canvas>
         </div>
 
 
     </div>
+
 </div>
 </body>
 

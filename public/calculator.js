@@ -12,6 +12,9 @@ let results;
 let interest_free_months;
 let month;
 
+//Chart
+let cashflow_chart;
+let profit_chart;
 
 function getInterestForYear(year) {
     return results['year_totals'][year]['interest'];
@@ -27,8 +30,6 @@ function getPrincipalBalanceForYear(year) {
 }
 
 function calculateLoan() {
-
-    debugger;
 
 
     //Calculations
@@ -88,11 +89,13 @@ function calculateLoan() {
         claim_instant_threshold
     );
 
-    drawGraph(current_method_results, mside_method_results, loan_term)
+    drawCashflowGraph(current_method_results, mside_method_results, loan_term)
+    drawProfitGraph(current_method_results, mside_method_results, loan_term)
 
 }
 
-function drawGraph(current_method_results, mside_method_results, loan_term) {
+
+function drawCashflowGraph(current_method_results, mside_method_results, loan_term) {
 
     let labels = [];
     for (let index = 1; index <= loan_term; ++index) {
@@ -104,36 +107,123 @@ function drawGraph(current_method_results, mside_method_results, loan_term) {
     series.push(mside_method_results.flatMap(x => [x.cashflow]));
 
 
-    var ctx = document.getElementById('myChart').getContext('2d');
-    var chart = new Chart(ctx, {
-        // The type of chart we want to create
-        type: 'line',
+    let datasets = [{
+        label: 'Current Method',
+        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 1,
+        data: current_method_results.flatMap(x => [(x.cashflow)])
+    },{
+        label: 'MSide Method',
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1,
+        data: mside_method_results.flatMap(x => [x.cashflow])
+    }];
 
-        // The data for our dataset
-        data: {
-            labels: labels,
-            datasets: [{
-                label: 'Current Method',
-                backgroundColor: 'rgb(255, 255, 255)',
-                borderColor: 'rgb(0,157,156)',
-                borderWidth: 5,
-                data: current_method_results.flatMap(x => [(x.cashflow)])
-            },{
-                label: 'MSide Method',
-                backgroundColor: 'rgb(255, 255, 255)',
-                borderColor: 'rgb(0,27,221)',
-                borderWidth: 5,
-                data: mside_method_results.flatMap(x => [x.cashflow])
-            }
-            ]
-        },
+    var ctx = document.getElementById('cashflow-chart');
 
-        // Configuration options go here
-        options: {responsive:false}
-    });
+    if (cashflow_chart) {
+        cashflow_chart.data.datasets = datasets;
+        cashflow_chart.update();
+    } else {
+        cashflow_chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'bar',
+
+            // The data for our dataset
+            data: {
+                labels: labels,
+                datasets: datasets
+            },
+
+            // Configuration options go here
+            options:
+                {responsive:false,
+                    title: {
+                        display: true,
+                        text: "Cashflow"
+                    },
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+        });
+    }
+
+}
+
+
+
+function drawProfitGraph(current_method_results, mside_method_results, loan_term) {
+
+    let labels = [];
+    for (let index = 1; index <= loan_term; ++index) {
+        labels.push(index);
+    }
+
+    let series = [];
+    series.push();
+    series.push(mside_method_results.flatMap(x => [x.profit]));
+
+
+    let datasets = [{
+        label: 'Current Method',
+        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 1,
+        data: current_method_results.flatMap(x => [(x.profit)])
+    },{
+        label: 'MSide Method',
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1,
+        data: mside_method_results.flatMap(x => [x.profit])
+    }];
+
+    var ctx = document.getElementById('profit-chart');
+
+    if (profit_chart) {
+        profit_chart.data.datasets = datasets;
+        profit_chart.update();
+    } else {
+        profit_chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'bar',
+
+            // The data for our dataset
+            data: {
+                labels: labels,
+                datasets: datasets
+            },
+
+            // Configuration options go here
+            options:
+                {responsive:false,
+                    title: {
+                        display: true,
+                        text: "Cashflow"
+                    },
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+        });
+    }
+
+
 
 
 }
+
 
 function getCashflow(is_mside_method,
                      expense_new_per_crown,
@@ -187,6 +277,12 @@ function getCashflow(is_mside_method,
             tax_expense = profit_before_tax * tax_rate;
         }
         let profit_after_tax = profit_before_tax - tax_expense;
+
+        if (year === 1) {
+            year_results[year]['profit'] = profit_after_tax;
+        } else {
+            year_results[year]['profit'] = year_results[year-1]['profit'] + profit_after_tax;
+        }
 
         //4
         let cashflow_from_financing = 0;
