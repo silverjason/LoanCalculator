@@ -97,28 +97,23 @@ function calculateLoan() {
 
 function drawCashflowGraph(current_method_results, mside_method_results, loan_term) {
 
-    let labels = [];
-    for (let index = 1; index <= loan_term; ++index) {
-        labels.push(index);
-    }
-
-    let series = [];
-    series.push();
-    series.push(mside_method_results.flatMap(x => [x.cashflow]));
-
+    let labels = ["1 Year"];
+    // for (let index = 1; index <= loan_term; ++index) {
+    //     labels.push(index);
+    // }
 
     let datasets = [{
         label: 'Current Method',
         backgroundColor: 'rgba(54, 162, 235, 0.2)',
         borderColor: 'rgba(54, 162, 235, 1)',
         borderWidth: 1,
-        data: current_method_results.flatMap(x => [(x.cashflow)])
+        data: [Math.round(current_method_results[1]['cashflow'])]
     },{
         label: 'MSide Method',
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
         borderColor: 'rgba(75, 192, 192, 1)',
         borderWidth: 1,
-        data: mside_method_results.flatMap(x => [x.cashflow])
+        data: [Math.round(mside_method_results[1]['cashflow'])]
     }];
 
     var ctx = document.getElementById('cashflow-chart');
@@ -156,6 +151,7 @@ function drawCashflowGraph(current_method_results, mside_method_results, loan_te
     }
 
 }
+
 
 
 
