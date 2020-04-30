@@ -79,7 +79,7 @@
             <input id="interest_only_for_first_year"  class="form-control" placeholder="0" type="checkbox">
         </div>
         <div>
-            <span>Interest Free for 1st Year</span>
+            <span>No Interest Repayments for 12 Months?</span>
             <input id="no_interest_in_first_year" class="form-control" placeholder="0" type="checkbox">
         </div>
         <div>

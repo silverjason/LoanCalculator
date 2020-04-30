@@ -11,20 +11,23 @@ let term_pay;
 let results;
 let interest_free_months;
 let month;
-
+let model_total_years = 7;
 //Chart
 let cashflow_chart;
 let profit_chart;
 
 function getInterestForYear(year) {
+    if (year > term_years) return 0;
     return results['year_totals'][year]['interest'];
 }
 
 function getPrincipalForYear(year) {
+    if (year > term_years) return 0;
     return results['year_totals'][year]['principal'];
 }
 
 function getPrincipalBalanceForYear(year) {
+    if (year > term_years) return 0;
     let principal_balance = results['year_totals'][year]['principal_balance'];
     return principal_balance > 0 ? principal_balance : 0;
 }
@@ -37,11 +40,11 @@ function calculateLoan() {
     let crowns_per_week = document.getElementById("crowns_per_week").value;
     let loan_amount = document.getElementById("loan_amount").value;
     let loan_term = document.getElementById("term").value;
-    let interest = document.getElementById("term").value / 100;
+    let interest = document.getElementById("interest_rate").value / 100;
     let payments_per_year = document.getElementById("payments_per_year").value;
     let months_volume_impacted = document.getElementById("months_impacted").value;
     let interest_only_for_first_year = document.getElementById("interest_only_for_first_year").checked;
-    let no_interest_in_first_year = !document.getElementById("no_interest_in_first_year").checked;
+    let no_interest_in_first_year = document.getElementById("no_interest_in_first_year").checked;
     let claim_instant_threshold = document.getElementById("claim_instant_threshold").checked;
     let is_company = document.getElementById("is_company").checked;
     let tax_rate = is_company ? 0.27 : 0.45;
@@ -98,9 +101,7 @@ function calculateLoan() {
 function drawCashflowGraph(current_method_results, mside_method_results, loan_term) {
 
     let labels = ["1 Year"];
-    // for (let index = 1; index <= loan_term; ++index) {
-    //     labels.push(index);
-    // }
+
 
     let datasets = [{
         label: 'Current Method',
@@ -155,16 +156,12 @@ function drawCashflowGraph(current_method_results, mside_method_results, loan_te
 
 
 
-function drawProfitGraph(current_method_results, mside_method_results, loan_term) {
+function drawProfitGraph(current_method_results, mside_method_results) {
 
     let labels = [];
-    for (let index = 1; index <= loan_term; ++index) {
+    for (let index = 1; index <= model_total_years; ++index) {
         labels.push(index);
     }
-
-    let series = [];
-    series.push();
-    series.push(mside_method_results.flatMap(x => [x.profit]));
 
 
     let datasets = [{
@@ -236,7 +233,7 @@ function getCashflow(is_mside_method,
     let year = 1;
     let year_results = [];
 
-    while (year <= loan_term) {
+    while (year <= model_total_years) {
 
         year_results[year] = [];
 
