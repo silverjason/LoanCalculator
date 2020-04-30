@@ -67,10 +67,6 @@
             <input id="interest_rate"  value="4.5" maxlength="8" class="form-control" placeholder="0" min="0" max="99999999" type="number">
         </div>
         <div>
-            <span>Payments Per Year</span>
-            <input id="payments_per_year"  value="12" maxlength="8" class="form-control" placeholder="0" min="0" max="99999999" type="number">
-        </div>
-        <div>
             <span>Months Impacted by Covid</span>
             <input id="months_impacted"  value="0" maxlength="8" class="form-control" placeholder="0" min="0" max="99999999" type="number">
         </div>

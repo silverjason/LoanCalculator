@@ -41,13 +41,13 @@ function calculateLoan() {
     let loan_amount = document.getElementById("loan_amount").value;
     let loan_term = document.getElementById("term").value;
     let interest = document.getElementById("interest_rate").value / 100;
-    let payments_per_year = document.getElementById("payments_per_year").value;
     let months_volume_impacted = document.getElementById("months_impacted").value;
     let interest_only_for_first_year = document.getElementById("interest_only_for_first_year").checked;
     let no_interest_in_first_year = document.getElementById("no_interest_in_first_year").checked;
     let claim_instant_threshold = document.getElementById("claim_instant_threshold").checked;
     let is_company = document.getElementById("is_company").checked;
     let tax_rate = is_company ? 0.27 : 0.45;
+    let payments_per_year = 12;
 
     let data = {
         'loan_amount' : loan_amount,
