@@ -267,7 +267,7 @@ function getCashflow(is_mside_method,
         } else {
             tax_expense = profit_before_tax * tax_rate;
         }
-        let profit_after_tax = profit_before_tax - tax_expense;
+        let profit_after_tax = Math.round(profit_before_tax - tax_expense);
 
         if (year === 1) {
             year_results[year]['profit'] = profit_after_tax;
