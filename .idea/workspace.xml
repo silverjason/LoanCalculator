@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a56787f0-b6b3-44ec-976f-c961e7a2ae58" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Procfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/calculator.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/calculator.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -341,9 +341,10 @@
     <state x="307" y="-1061" width="1017" height="682" key="find.popup/0.0.1680.1050/-464.-1440.2560.1440@-464.-1440.2560.1440" timestamp="1587982425701" />
     <state x="307" y="-1061" width="1017" height="682" key="find.popup/0.23.1680.1027/-464.-1440.2560.1440@-464.-1440.2560.1440" timestamp="1587983180060" />
     <state x="506" y="293" width="667" height="486" key="find.popup/0.23.1680.1027@0.23.1680.1027" timestamp="1587870746459" />
-    <state x="505" y="250" width="670" height="676" key="search.everywhere.popup" timestamp="1587878198348">
-      <screen x="0" y="23" width="1680" height="1027" />
+    <state x="505" y="232" width="670" height="692" key="search.everywhere.popup" timestamp="1588238638512">
+      <screen x="0" y="0" width="1680" height="1050" />
     </state>
+    <state x="505" y="232" width="670" height="692" key="search.everywhere.popup/0.0.1680.1050/-464.-1440.2560.1440@0.0.1680.1050" timestamp="1588238638512" />
     <state x="505" y="250" width="670" height="676" key="search.everywhere.popup/0.23.1680.1027@0.23.1680.1027" timestamp="1587878198348" />
   </component>
   <component name="XDebuggerManager">
