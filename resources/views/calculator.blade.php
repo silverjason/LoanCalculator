@@ -33,6 +33,16 @@
             display: inline !important;;
         }
 
+        .questions {
+            text-align: initial;
+            width: 63%;
+            margin: auto;
+        }
+
+        .graph-container {
+            margin-top: 20px;
+        }
+
     </style>
 
 
@@ -44,56 +54,64 @@
 
     <div class="content">
 
-        <h1>Loan Calculator</h1>
+        <h1>Mchairside Cashflow and Profit Calculator</h1>
 
-        <div>
-            <span>Income Per Crown</span>
-            <input id="income_per_crown"  value="1600" maxlength="8" class="form-control" placeholder="0" min="0" max="99999999" type="number">
-        </div>
-        <div>
-            <span>Crowns Per Week</span>
-            <input id="crowns_per_week"  value="8" maxlength="8" class="form-control" placeholder="0" min="0" max="99999999" type="number">
-        </div>
-        <div>
-            <span>Loan Amount</span>
-            <input id="loan_amount"  value="100000" maxlength="8" class="form-control" placeholder="0" min="0" max="99999999" type="number">
-        </div>
-        <div>
-            <span>Term (years)</span>
-            <input id="term"  value="5" maxlength="7" class="form-control" placeholder="0" min="0" max="7" type="number">
-        </div>
-        <div>
-            <span>Interest %</span>
-            <input id="interest_rate"  value="4.5" maxlength="8" class="form-control" placeholder="0" min="0" max="99999999" type="number">
-        </div>
-        <div>
-            <span>Months Impacted by Covid</span>
-            <input id="months_impacted"  value="0" maxlength="8" class="form-control" placeholder="0" min="0" max="99999999" type="number">
-        </div>
-        <div>
-            <span>Interest Only for 1st Year</span>
-            <input id="interest_only_for_first_year"  class="form-control" placeholder="0" type="checkbox">
-        </div>
-        <div>
-            <span>No Interest Repayments for 12 Months?</span>
-            <input id="no_interest_in_first_year" class="form-control" placeholder="0" type="checkbox">
-        </div>
-        <div>
-            <span>Claim threshold</span>
-            <input id="claim_instant_threshold" class="form-control" placeholder="0" type="checkbox">
-        </div>
-        <div>
-            <span>Tax as Company</span>
-            <input id="is_company" class="form-control" placeholder="0" type="checkbox">
+        <div class="questions">
+
+            <div>
+                <span>What do you bill per crown?</span>
+                <input id="income_per_crown"  value="1600" maxlength="8" class="form-control" placeholder="0" min="0" max="99999999" step="25" type="number">
+            </div>
+            <div>
+                <span>How many crowns do you do per week?</span>
+                <input id="crowns_per_week"  value="8" maxlength="8" class="form-control" placeholder="0" min="0" max="99999999" type="number">
+            </div>
+            <div>
+                <span>What is the lab fee per crown?</span>
+                <input id="lab_fee"  value="300" maxlength="3" class="form-control" placeholder="0" min="0" max="999" type="number">
+            </div>
+            <div>
+                <span>Mchairside purchase price</span>
+                <input id="loan_amount"  disabled value="99000" maxlength="8" class="form-control" placeholder="0" min="0" max="99999999" type="number">
+            </div>
+            <div>
+                <span>Loan term (years)</span>
+                <input id="term"  value="5" maxlength="7" class="form-control" placeholder="0" min="0" max="7" type="number">
+            </div>
+            <div>
+                <span>Interest rate %</span>
+                <input id="interest_rate" class="form-control" type="number" value="3.89" min="0" max="10" maxlength="3" step="0.01" />
+            </div>
+            <div>
+                <span>Months of further impact from COVID-19 (assuming zero revenue)</span>
+                <input id="months_impacted"  value="0" maxlength="8" class="form-control" placeholder="0" min="0" max="99999999" type="number">
+            </div>
+            <div>
+                <span>Are you taking advantage of us paying your interest for 12 months?</span>
+                <input id="no_interest_in_first_year" class="form-control" placeholder="0" type="checkbox">
+            </div>
+            <div>
+                <span>Are you purchasing prior to 30 June to claim full deduction?</span>
+                <input id="claim_instant_threshold" class="form-control" placeholder="0" type="checkbox">
+            </div>
+            <div>
+                <span>Are you taxed at the corporate or individual rate?</span>
+
+                <select id="tax_type">
+                    <option value="corporate_tax" selected>Corporate</option>
+                    <option value="individual_tax">Individual</option>
+                </select>
+
+            </div>
+
+            <button type="button" onclick="calculateLoan()">Calculate</button>
+
         </div>
 
-        <button type="button" onclick="calculateLoan()">Calculate</button>
-
-        <div id="graph-container">
+        <div class="graph-container">
             <canvas id="cashflow-chart" class="loan-chart" width="400" height="400" style="margin: auto;"></canvas>
             <canvas id="profit-chart" class="loan-chart" width="400" height="400" style="margin: auto;"></canvas>
         </div>
-
 
     </div>
 

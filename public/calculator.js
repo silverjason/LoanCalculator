@@ -32,22 +32,30 @@ function getPrincipalBalanceForYear(year) {
     return principal_balance > 0 ? principal_balance : 0;
 }
 
+
+window.onload = function () {
+    calculateLoan();
+}
+
 function calculateLoan() {
 
 
     //Calculations
     let income_per_crown = document.getElementById("income_per_crown").value;
     let crowns_per_week = document.getElementById("crowns_per_week").value;
+    let lab_fee = document.getElementById("lab_fee").value;
     let loan_amount = document.getElementById("loan_amount").value;
     let loan_term = document.getElementById("term").value;
     let interest = document.getElementById("interest_rate").value / 100;
     let months_volume_impacted = document.getElementById("months_impacted").value;
-    let interest_only_for_first_year = document.getElementById("interest_only_for_first_year").checked;
     let no_interest_in_first_year = document.getElementById("no_interest_in_first_year").checked;
     let claim_instant_threshold = document.getElementById("claim_instant_threshold").checked;
-    let is_company = document.getElementById("is_company").checked;
+    let is_company = document.getElementById("tax_type").value === "corporate_tax";
+
+
     let tax_rate = is_company ? 0.27 : 0.45;
     let payments_per_year = 12;
+    let interest_only_for_first_year = no_interest_in_first_year;
 
     let data = {
         'loan_amount' : loan_amount,
@@ -78,7 +86,7 @@ function calculateLoan() {
 
     let current_method_results = getCashflow(
         false,
-        300,
+        lab_fee,
         income_per_crown,
         no_interest_in_first_year,
         interest_only_for_first_year,
@@ -104,17 +112,17 @@ function drawCashflowGraph(current_method_results, mside_method_results, loan_te
 
 
     let datasets = [{
-        label: 'Current Method',
-        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-        borderColor: 'rgba(54, 162, 235, 1)',
-        borderWidth: 1,
-        data: [Math.round(current_method_results[1]['cashflow'])]
-    },{
-        label: 'MSide Method',
+        label: "Purchase Mchairside",
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
         borderColor: 'rgba(75, 192, 192, 1)',
         borderWidth: 1,
         data: [Math.round(mside_method_results[1]['cashflow'])]
+    },{
+        label: "Continue offering crowns in traditional method",
+        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 1,
+        data: [Math.round(current_method_results[1]['cashflow'])]
     }];
 
     var ctx = document.getElementById('cashflow-chart');
@@ -138,7 +146,7 @@ function drawCashflowGraph(current_method_results, mside_method_results, loan_te
                 {responsive:false,
                     title: {
                         display: true,
-                        text: "Cashflow ($)"
+                        text: "Cashflow comparison for first 12 months"
                     },
                     scales: {
                         yAxes: [{
@@ -165,17 +173,17 @@ function drawProfitGraph(current_method_results, mside_method_results) {
 
 
     let datasets = [{
-        label: 'Current Method',
-        backgroundColor: 'rgba(255, 255, 255, 0)',
-        borderColor: 'rgba(54, 162, 235, 1)',
-        borderWidth: 4,
-        data: current_method_results.flatMap(x => [(x.profit)])
-    },{
-        label: 'MSide Method',
+        label: 'Purchase Mchairside',
         backgroundColor: 'rgba(255, 255, 255, 0)',
         borderColor: 'rgba(75, 192, 192, 1)',
         borderWidth: 4,
         data: mside_method_results.flatMap(x => [x.profit])
+    },{
+        label: 'Continue offering crowns in traditional method',
+        backgroundColor: 'rgba(255, 255, 255, 0)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 4,
+        data: current_method_results.flatMap(x => [(x.profit)])
     }];
 
     var ctx = document.getElementById('profit-chart');
@@ -199,7 +207,7 @@ function drawProfitGraph(current_method_results, mside_method_results) {
                 {responsive:false,
                     title: {
                         display: true,
-                        text: "Cumulative Profit After Tax ($)"
+                        text: "Cumulative annual profit comparison for 7 years ($)"
                     },
                     scales: {
                         yAxes: [{
@@ -232,6 +240,10 @@ function getCashflow(is_mside_method,
 
     let year = 1;
     let year_results = [];
+
+    if (is_mside_method) {
+        crowns_per_week = crowns_per_week * 1.5;
+    }
 
     while (year <= model_total_years) {
 
