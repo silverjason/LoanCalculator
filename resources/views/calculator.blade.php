@@ -35,7 +35,7 @@
 
         .questions {
             text-align: initial;
-            width: 63%;
+            width: 35%;
             margin: auto;
         }
 
