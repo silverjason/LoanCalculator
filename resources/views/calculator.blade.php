@@ -57,6 +57,31 @@
             height: 28px;
         }
 
+        .chart-legend ul {
+            list-style: none;
+            background: black;
+            color: white;
+        }
+
+        .chart-legend li {
+            display: inline-block;
+        }
+
+        .legend {
+            margin: auto;
+            display: block;
+            width: 700px;
+        }
+
+        li {
+            text-align: initial;
+        }
+
+        ul {
+            list-style-type: none;
+        }
+
+
     </style>
 
 
@@ -124,7 +149,13 @@
 
         <div class="graph-container">
             <canvas id="cashflow-chart" class="loan-chart" width="700" height="400" style="margin: auto;"></canvas>
+
+
+
+            <div id="cash_legend" class="legend"></div>
             <canvas id="profit-chart" class="loan-chart" width="700" height="400" style="margin: auto;"></canvas>
+            <div id="profit_legend" class="legend"></div>
+
         </div>
 
     </div>

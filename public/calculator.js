@@ -16,6 +16,13 @@ let model_total_years = 7;
 let cashflow_chart;
 let profit_chart;
 
+const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 0
+})
+
+
 function getInterestForYear(year) {
     if (year > term_years) return 0;
     return results['year_totals'][year]['interest'];
@@ -130,6 +137,7 @@ function drawCashflowGraph(current_method_results, mside_method_results, loan_te
     if (cashflow_chart) {
         cashflow_chart.data.datasets = datasets;
         cashflow_chart.update();
+        cashflow_chart.generateLegend();
     } else {
         cashflow_chart = new Chart(ctx, {
             // The type of chart we want to create
@@ -143,10 +151,33 @@ function drawCashflowGraph(current_method_results, mside_method_results, loan_te
 
             // Configuration options go here
             options: {
+                legendCallback: function(chart) {
+                    var text = [];
+                    text.push('<ul class="' + chart.id + '-legend">');
+                    for (var i = 0; i < chart.data.datasets.length; i++) {
+                        let color = chart.data.datasets[i].borderColor;
+                        text.push('<li><span class="dot" style="height: 10px;width: 10px;background-color: ' + color + ' ;border-radius: 50%;display: inline-block;"></span><span style="padding-left: 10px;"></span>');
+                        if (chart.data.datasets[i].label) {
+                            text.push(chart.data.datasets[i].label);
+                        }
+                        text.push('</li>');
+                    }
+                    text.push('</ul>');
+                    return text.join('');
+                },
+                tooltips: {
+                    enabled: true,
+                    callbacks: {
+                        label: function(tooltipItem, data) {
+                            return " Cashflow: " + formatter.format(tooltipItem.value);
+                        }
+                    }
+                },
                 responsive:false,
                 legend: {
                     position: "bottom",
-                    align: "center"
+                    align: "center",
+                    display: false
                 },
                 title: {
                     display: true,
@@ -172,6 +203,8 @@ function drawCashflowGraph(current_method_results, mside_method_results, loan_te
                 }
         });
     }
+
+    document.getElementById("cash_legend").innerHTML = cashflow_chart.generateLegend();
 
 }
 
@@ -218,11 +251,34 @@ function drawProfitGraph(current_method_results, mside_method_results) {
 
             // Configuration options go here
             options: {
+                legendCallback: function(chart) {
+                    var text = [];
+                    text.push('<ul class="' + chart.id + '-legend">');
+                    for (var i = 0; i < chart.data.datasets.length; i++) {
 
+                        let color = chart.data.datasets[i].borderColor;
+                        text.push('<li><span class="dot" style="height: 10px;width: 10px;background-color: ' + color + ' ;border-radius: 50%;display: inline-block;"></span><span style="padding-left: 10px;"></span>');
+                        if (chart.data.datasets[i].label) {
+                            text.push(chart.data.datasets[i].label);
+                        }
+                        text.push('</li>');
+                    }
+                    text.push('</ul>');
+                    return text.join('');
+                },
+                tooltips: {
+                    enabled: true,
+                    callbacks: {
+                        label: function(tooltipItem, data) {
+                            return " Annual profit: " + formatter.format(tooltipItem.value);
+                        }
+                    }
+                },
                 legend: {
                     fullWidth: true,
                     align: "center",
                     position: "bottom",
+                    display: false
                 },
                 responsive:false,
                 title: {
@@ -249,6 +305,9 @@ function drawProfitGraph(current_method_results, mside_method_results) {
                 }
         });
     }
+
+    document.getElementById("profit_legend").innerHTML = profit_chart.generateLegend();
+
 
 }
 
