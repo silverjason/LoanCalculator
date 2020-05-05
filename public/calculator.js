@@ -108,20 +108,20 @@ function calculateLoan() {
 
 function drawCashflowGraph(current_method_results, mside_method_results, loan_term) {
 
-    let labels = ["1 Year"];
+    let labels = ["Year 1"];
 
 
     let datasets = [{
         label: "Purchase Mchairside",
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
         borderColor: 'rgba(75, 192, 192, 1)',
-        borderWidth: 1,
+        borderWidth: 2,
         data: [Math.round(mside_method_results[1]['cashflow'])]
     },{
         label: "Continue offering crowns in traditional method",
         backgroundColor: 'rgba(54, 162, 235, 0.2)',
         borderColor: 'rgba(54, 162, 235, 1)',
-        borderWidth: 1,
+        borderWidth: 2,
         data: [Math.round(current_method_results[1]['cashflow'])]
     }];
 
@@ -142,19 +142,33 @@ function drawCashflowGraph(current_method_results, mside_method_results, loan_te
             },
 
             // Configuration options go here
-            options:
-                {responsive:false,
-                    title: {
-                        display: true,
-                        text: "Cashflow comparison for first 12 months"
-                    },
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: true
-                            }
-                        }]
-                    }
+            options: {
+                responsive:false,
+                legend: {
+                    position: "bottom",
+                    align: "center"
+                },
+                title: {
+                    display: true,
+                    text: "Cashflow comparison for first 12 months"
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                        },
+                        gridLines: {
+                            display:false
+                        },
+                        display: false,
+
+                    }],
+                    xAxes: [{
+                        gridLines: {
+                            display:false
+                        }
+                    }]
+                }
                 }
         });
     }
@@ -168,7 +182,7 @@ function drawProfitGraph(current_method_results, mside_method_results) {
 
     let labels = [];
     for (let index = 1; index <= model_total_years; ++index) {
-        labels.push(index);
+        labels.push("Year " + index.toString());
     }
 
 
@@ -203,23 +217,38 @@ function drawProfitGraph(current_method_results, mside_method_results) {
             },
 
             // Configuration options go here
-            options:
-                {responsive:false,
-                    title: {
-                        display: true,
-                        text: "Cumulative annual profit comparison for 7 years ($)"
-                    },
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: true
-                            }
-                        }]
-                    }
+            options: {
+
+                legend: {
+                    fullWidth: true,
+                    align: "center",
+                    position: "bottom",
+                },
+                responsive:false,
+                title: {
+                    display: true,
+                    text: "Cumulative annual profit comparison for 7 years ($)"
+                },
+                scales: {
+                    yAxes: [{
+                        gridLines: {
+                            display:false
+                        },
+                        ticks: {
+
+                            beginAtZero: true
+                        },
+                        display: false
+                    }],
+                    xAxes: [{
+                        gridLines: {
+                            display:false
+                        }
+                    }]
+                }
                 }
         });
     }
-
 
 }
 
