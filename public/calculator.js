@@ -270,7 +270,7 @@ function drawProfitGraph(current_method_results, mside_method_results) {
                     enabled: true,
                     callbacks: {
                         label: function(tooltipItem, data) {
-                            return " Annual profit: " + formatter.format(tooltipItem.value);
+                            return " Cumulative profit: " + formatter.format(tooltipItem.value);
                         }
                     }
                 },

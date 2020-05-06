@@ -103,7 +103,7 @@
             </div>
             <div class="question">
                 <span>How many crowns do you do per week?</span>
-                <input id="crowns_per_week"  value="8" maxlength="8" class="form-control" placeholder="0" min="0" max="99999999" type="number">
+                <input id="crowns_per_week"  value="5" maxlength="8" class="form-control" placeholder="0" min="0" max="99999999" type="number">
             </div>
             <div class="question">
                 <span>What is the lab fee per crown?</span>
