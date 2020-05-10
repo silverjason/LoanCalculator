@@ -40,14 +40,9 @@
             max-width: 800px;
         }
 
-        .questions {
-            text-align: initial;
-            width: 41%;
-            margin: auto;
-        }
 
         .graph-container {
-            margin: 30px;
+            margin-bottom: 30px;
         }
 
         #profit-chart {
@@ -58,21 +53,6 @@
             height: 28px;
         }
 
-        .chart-legend ul {
-            list-style: none;
-            background: black;
-            color: white;
-        }
-
-        .chart-legend li {
-            display: inline-block;
-        }
-
-        .legend {
-            margin: auto;
-            display: block;
-            width: 700px;
-        }
 
         li {
             text-align: initial;
@@ -85,7 +65,7 @@
         h2 {
             font-size: x-large;
             font-weight: 300;
-            margin: 0;
+            margin: 40px 0 0 0;
         }
 
         h3 {
@@ -94,6 +74,11 @@
         }
 
         #profit-heading {
+            word-break: break-word;
+            width: 270px;
+        }
+
+        #cashflow-heading {
             word-break: break-word;
             width: 270px;
         }
@@ -107,7 +92,7 @@
         .result-heading {
             color: rgb(3, 109, 255);
             word-break: break-word;
-            width: 130px;
+            width: 160px;
             font-size: medium;
         }
 
@@ -116,7 +101,7 @@
         }
 
         .result {
-            margin-right: 40px;
+            margin: 0 40px 0 40px;
         }
 
     </style>
@@ -184,11 +169,29 @@
 
         </div>
 
+{{--        Cashflow--}}
+
+        <h2 id="cashflow-heading">Cashflow Comparison</h2>
+        <h3>for the first 12 months</h3>
+
         <div class="graph-container">
             <canvas id="cashflow-chart" class="loan-chart" width="700" height="400" style="margin: auto;"></canvas>
-            <div id="cash_legend" class="legend"></div>
         </div>
 
+
+        <div class="results">
+            <div class="result">
+                <div class="result-heading">Cumulative profit with Mchairside</div>
+                <div class="result-value" id="cashflow-value-mchairside"></div>
+            </div>
+
+            <div class="result">
+                <div class="result-heading">Cumulative profit with traditional method</div>
+                <div class="result-value" id="cashflow-value-traditional"></div>
+            </div>
+        </div>
+
+{{--        Profit--}}
         <h2 id="profit-heading">Cumulative Annual Profit Comparison</h2>
         <h3>for 7 years</h3>
 
@@ -199,14 +202,13 @@
         <div class="results">
             <div class="result">
                 <div class="result-heading">Cumulative profit with Mchairside</div>
-                <div class="result-value">$1000000</div>
+                <div class="result-value" id="profit-value-mchairside"></div>
             </div>
 
             <div class="result">
-                <div class="result-heading">Cumulative profit with Mchairside</div>
-                <div class="result-value">$1000000</div>
+                <div class="result-heading">Cumulative profit with traditional method</div>
+                <div class="result-value" id="profit-value-traditional"></div>
             </div>
-
         </div>
 
 

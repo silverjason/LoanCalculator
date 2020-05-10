@@ -115,7 +115,6 @@ function calculateLoan() {
 
 function drawCashflowGraph(current_method_results, mside_method_results, loan_term) {
 
-    let labels = ["Year 1"];
     var ctx = document.getElementById('cashflow-chart').getContext("2d");
 
     var currentGradient = ctx.createLinearGradient(0, 100, 0, 500);
@@ -126,18 +125,24 @@ function drawCashflowGraph(current_method_results, mside_method_results, loan_te
     msideGradient.addColorStop(0, "rgba(43, 190, 231, 1)");
     msideGradient.addColorStop(1, "rgba(74, 138, 234, 1)");
 
+    let mchairsideTotal = Math.round(mside_method_results[1]['cashflow']);
+    let traditionalTotal = Math.round(current_method_results[1]['cashflow']);
+
+    document.getElementById("cashflow-value-mchairside").innerText = formatter.format(mchairsideTotal);
+    document.getElementById("cashflow-value-traditional").innerText = formatter.format(traditionalTotal);
+
     let datasets = [{
         label: "Purchase Mchairside",
         backgroundColor: msideGradient,
         borderColor: 'rgba(75, 192, 192, 1)',
         borderWidth: 0,
-        data: [Math.round(mside_method_results[1]['cashflow'])]
+        data: [mchairsideTotal]
     },{
         label: "Continue offering crowns in traditional method",
         backgroundColor: currentGradient,
         borderColor: 'rgba(54, 162, 235, 1)',
         borderWidth: 0,
-        data: [Math.round(current_method_results[1]['cashflow'])]
+        data: [traditionalTotal]
     }];
 
     if (cashflow_chart) {
@@ -151,43 +156,19 @@ function drawCashflowGraph(current_method_results, mside_method_results, loan_te
 
             // The data for our dataset
             data: {
-                labels: labels,
                 datasets: datasets
             },
 
             // Configuration options go here
             options: {
-                legendCallback: function(chart) {
-                    var text = [];
-                    text.push('<ul class="' + chart.id + '-legend">');
-                    for (var i = 0; i < chart.data.datasets.length; i++) {
-                        let color = chart.data.datasets[i].borderColor;
-                        text.push('<li><span class="dot" style="height: 10px;width: 10px;background-color: ' + color + ' ;border-radius: 50%;display: inline-block;"></span><span style="padding-left: 10px;"></span>');
-                        if (chart.data.datasets[i].label) {
-                            text.push(chart.data.datasets[i].label);
-                        }
-                        text.push('</li>');
-                    }
-                    text.push('</ul>');
-                    return text.join('');
-                },
                 tooltips: {
-                    enabled: true,
-                    callbacks: {
-                        label: function(tooltipItem, data) {
-                            return " Cashflow: " + formatter.format(tooltipItem.value);
-                        }
-                    }
+                    enabled: false,
                 },
                 responsive:false,
                 legend: {
                     position: "bottom",
                     align: "center",
                     display: false
-                },
-                title: {
-                    display: true,
-                    text: "Cashflow comparison for first 12 months"
                 },
                 scales: {
                     yAxes: [{
@@ -210,7 +191,6 @@ function drawCashflowGraph(current_method_results, mside_method_results, loan_te
         });
     }
 
-    document.getElementById("cash_legend").innerHTML = cashflow_chart.generateLegend();
 
 }
 
@@ -229,8 +209,13 @@ function drawProfitGraph(current_method_results, mside_method_results) {
     msideGradient.addColorStop(0, "rgba(43, 190, 231, 1)");
     msideGradient.addColorStop(1, "rgba(74, 138, 234, 1)");
 
-    let labels = ["Today", "", "", "", "", "", "7 Years"];
+    let labels = ["Year 1", "Year 2", "Year 3", "Year 4", "Year 5", "Year 6", "7 Years"];
 
+    let mchairsideTotal = Math.round(mside_method_results[7]['profit']);
+    let traditionalTotal = Math.round(current_method_results[7]['profit']);
+
+    document.getElementById("profit-value-mchairside").innerText = formatter.format(mchairsideTotal);
+    document.getElementById("profit-value-traditional").innerText = formatter.format(traditionalTotal);
 
     let datasets = [{
         label: 'Continue offering crowns in traditional method',
@@ -261,6 +246,28 @@ function drawProfitGraph(current_method_results, mside_method_results) {
 
             // Configuration options go here
             options: {
+                tooltips: {
+                    xPadding: 10,
+                    yPadding: 10,
+                    footerSpacing: 6,
+                    bodySpacing: 6,
+                    mode: 'x',
+                    backgroundColor: 'white',
+                    titleFontColor: 'black',
+                    bodyFontColor: 'black',
+                    enabled: true,
+                    borderColor: 'black',
+                    borderWidth: 1,
+                    displayColors: false,
+                    itemSort: ((a, b, data) => b.yLabel - a.yLabel),
+                    intersect: false,
+                    callbacks: {
+                        label: function(tooltipItem, data) {
+                            let method = tooltipItem.datasetIndex === 1 ? 'with Mchairside: ' : 'without Mchairside: '
+                            return " Annual profit " + method +  formatter.format(tooltipItem.value);
+                        }
+                    }
+                },
                 legend: {
                     fullWidth: true,
                     align: "center",
