@@ -18,7 +18,6 @@
     <style>
         html, body {
             background-color: #fff;
-            color: #636b6f;
             font-family: 'Nunito', sans-serif;
             font-weight: 200;
             height: 100vh;
@@ -35,8 +34,10 @@
         }
 
         .content {
-            text-align: center;
+            width: 70%;
+            margin: auto;
             padding: 50px;
+            max-width: 800px;
         }
 
         .questions {
@@ -46,7 +47,7 @@
         }
 
         .graph-container {
-            margin-top: 20px;
+            margin: 30px;
         }
 
         #profit-chart {
@@ -81,6 +82,42 @@
             list-style-type: none;
         }
 
+        h2 {
+            font-size: x-large;
+            font-weight: 300;
+            margin: 0;
+        }
+
+        h3 {
+            font-weight: 100;
+            margin: 0;
+        }
+
+        #profit-heading {
+            word-break: break-word;
+            width: 270px;
+        }
+
+        .results {
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: center;
+        }
+
+        .result-heading {
+            color: rgb(3, 109, 255);
+            word-break: break-word;
+            width: 130px;
+            font-size: medium;
+        }
+
+        .result-value {
+            font-size: xx-large;
+        }
+
+        .result {
+            margin-right: 40px;
+        }
 
     </style>
 
@@ -149,14 +186,29 @@
 
         <div class="graph-container">
             <canvas id="cashflow-chart" class="loan-chart" width="700" height="400" style="margin: auto;"></canvas>
-
-
-
             <div id="cash_legend" class="legend"></div>
+        </div>
+
+        <h2 id="profit-heading">Cumulative Annual Profit Comparison</h2>
+        <h3>for 7 years</h3>
+
+        <div class="graph-container">
             <canvas id="profit-chart" class="loan-chart" width="700" height="400" style="margin: auto;"></canvas>
-            <div id="profit_legend" class="legend"></div>
+        </div>
+
+        <div class="results">
+            <div class="result">
+                <div class="result-heading">Cumulative profit with Mchairside</div>
+                <div class="result-value">$1000000</div>
+            </div>
+
+            <div class="result">
+                <div class="result-heading">Cumulative profit with Mchairside</div>
+                <div class="result-value">$1000000</div>
+            </div>
 
         </div>
+
 
     </div>
 

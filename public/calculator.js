@@ -116,23 +116,29 @@ function calculateLoan() {
 function drawCashflowGraph(current_method_results, mside_method_results, loan_term) {
 
     let labels = ["Year 1"];
+    var ctx = document.getElementById('cashflow-chart').getContext("2d");
 
+    var currentGradient = ctx.createLinearGradient(0, 100, 0, 500);
+    currentGradient.addColorStop(0, "rgba(253, 113, 169, 1)");
+    currentGradient.addColorStop(1, "rgba(140, 92, 224, 1)");
+
+    var msideGradient = ctx.createLinearGradient(0, 100, 0, 500);
+    msideGradient.addColorStop(0, "rgba(43, 190, 231, 1)");
+    msideGradient.addColorStop(1, "rgba(74, 138, 234, 1)");
 
     let datasets = [{
         label: "Purchase Mchairside",
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        backgroundColor: msideGradient,
         borderColor: 'rgba(75, 192, 192, 1)',
-        borderWidth: 2,
+        borderWidth: 0,
         data: [Math.round(mside_method_results[1]['cashflow'])]
     },{
         label: "Continue offering crowns in traditional method",
-        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        backgroundColor: currentGradient,
         borderColor: 'rgba(54, 162, 235, 1)',
-        borderWidth: 2,
+        borderWidth: 0,
         data: [Math.round(current_method_results[1]['cashflow'])]
     }];
-
-    var ctx = document.getElementById('cashflow-chart');
 
     if (cashflow_chart) {
         cashflow_chart.data.datasets = datasets;
@@ -213,27 +219,32 @@ function drawCashflowGraph(current_method_results, mside_method_results, loan_te
 
 function drawProfitGraph(current_method_results, mside_method_results) {
 
-    let labels = [];
-    for (let index = 1; index <= model_total_years; ++index) {
-        labels.push("Year " + index.toString());
-    }
+    var ctx = document.getElementById('profit-chart').getContext("2d");
+
+    var currentGradient = ctx.createLinearGradient(700, 0, 100, 0);
+    currentGradient.addColorStop(0, "rgba(253, 113, 169, 1)");
+    currentGradient.addColorStop(1, "rgba(140, 92, 224, 1)");
+
+    var msideGradient = ctx.createLinearGradient(700, 0, 100, 0);
+    msideGradient.addColorStop(0, "rgba(43, 190, 231, 1)");
+    msideGradient.addColorStop(1, "rgba(74, 138, 234, 1)");
+
+    let labels = ["Today", "", "", "", "", "", "7 Years"];
 
 
     let datasets = [{
-        label: 'Purchase Mchairside',
-        backgroundColor: 'rgba(255, 255, 255, 0)',
-        borderColor: 'rgba(75, 192, 192, 1)',
-        borderWidth: 4,
-        data: mside_method_results.flatMap(x => [x.profit])
-    },{
         label: 'Continue offering crowns in traditional method',
-        backgroundColor: 'rgba(255, 255, 255, 0)',
-        borderColor: 'rgba(54, 162, 235, 1)',
-        borderWidth: 4,
+        backgroundColor: currentGradient,
+        borderColor: 'white',
+        borderWidth: 1,
         data: current_method_results.flatMap(x => [(x.profit)])
+    },{
+        label: 'Purchase Mchairside',
+        backgroundColor: msideGradient,
+        borderColor: 'white',
+        borderWidth: 1,
+        data: mside_method_results.flatMap(x => [x.profit])
     }];
-
-    var ctx = document.getElementById('profit-chart');
 
     if (profit_chart) {
         profit_chart.data.datasets = datasets;
@@ -242,7 +253,6 @@ function drawProfitGraph(current_method_results, mside_method_results) {
         profit_chart = new Chart(ctx, {
             // The type of chart we want to create
             type: 'line',
-
             // The data for our dataset
             data: {
                 labels: labels,
@@ -251,29 +261,6 @@ function drawProfitGraph(current_method_results, mside_method_results) {
 
             // Configuration options go here
             options: {
-                legendCallback: function(chart) {
-                    var text = [];
-                    text.push('<ul class="' + chart.id + '-legend">');
-                    for (var i = 0; i < chart.data.datasets.length; i++) {
-
-                        let color = chart.data.datasets[i].borderColor;
-                        text.push('<li><span class="dot" style="height: 10px;width: 10px;background-color: ' + color + ' ;border-radius: 50%;display: inline-block;"></span><span style="padding-left: 10px;"></span>');
-                        if (chart.data.datasets[i].label) {
-                            text.push(chart.data.datasets[i].label);
-                        }
-                        text.push('</li>');
-                    }
-                    text.push('</ul>');
-                    return text.join('');
-                },
-                tooltips: {
-                    enabled: true,
-                    callbacks: {
-                        label: function(tooltipItem, data) {
-                            return " Cumulative profit: " + formatter.format(tooltipItem.value);
-                        }
-                    }
-                },
                 legend: {
                     fullWidth: true,
                     align: "center",
@@ -281,10 +268,6 @@ function drawProfitGraph(current_method_results, mside_method_results) {
                     display: false
                 },
                 responsive:false,
-                title: {
-                    display: true,
-                    text: "Cumulative annual profit comparison for 7 years ($)"
-                },
                 scales: {
                     yAxes: [{
                         gridLines: {
@@ -306,7 +289,7 @@ function drawProfitGraph(current_method_results, mside_method_results) {
         });
     }
 
-    document.getElementById("profit_legend").innerHTML = profit_chart.generateLegend();
+
 
 
 }
