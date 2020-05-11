@@ -164,7 +164,7 @@ function drawCashflowGraph(current_method_results, mside_method_results, loan_te
                 tooltips: {
                     enabled: false,
                 },
-                responsive:false,
+                responsive:true,
                 legend: {
                     position: "bottom",
                     align: "center",
@@ -274,7 +274,7 @@ function drawProfitGraph(current_method_results, mside_method_results) {
                     position: "bottom",
                     display: false
                 },
-                responsive:false,
+                responsive:true,
                 scales: {
                     yAxes: [{
                         gridLines: {

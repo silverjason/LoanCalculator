@@ -38,6 +38,7 @@
             margin: auto;
             padding: 50px;
             max-width: 800px;
+            min-width: 550px;
         }
 
 
@@ -84,9 +85,24 @@
         }
 
         .results {
-            display: flex;
             flex-wrap: nowrap;
             justify-content: center;
+        }
+
+        #cashflow-results {
+            display: flex;
+        }
+
+        @media screen and (max-width: 500px) {
+            #cumulative-profit-mside-result {
+                padding-bottom: 20px;
+            }
+        }
+
+        @media screen and (min-width: 500px) {
+            #profit-results {
+                display: flex;
+            }
         }
 
         .result-heading {
@@ -179,7 +195,7 @@
         </div>
 
 
-        <div class="results">
+        <div id="cashflow-results" class="results">
             <div class="result">
                 <div class="result-heading">Cumulative profit with Mchairside</div>
                 <div class="result-value" id="cashflow-value-mchairside"></div>
@@ -199,8 +215,8 @@
             <canvas id="profit-chart" class="loan-chart" width="700" height="400" style="margin: auto;"></canvas>
         </div>
 
-        <div class="results">
-            <div class="result">
+        <div id="profit-results" class="results">
+            <div id="cumulative-profit-mside-result" class="result">
                 <div class="result-heading">Cumulative profit with Mchairside</div>
                 <div class="result-value" id="profit-value-mchairside"></div>
             </div>
